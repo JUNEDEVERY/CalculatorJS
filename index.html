@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <title>Калькулятор</title>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div id="calc">
+
+            <h1 class="calc__title">Калькулятор</h1>
+
+            <div class="calc__row">
+                <div class="calc__result" id="result">0</div>
+                <button class="calc__btn  calc__btn--clean">C</button>
+            </div> <!-- .calc__row -->
+
+            <div class="calc__row">
+                <button class="calc__btn  calc__btn--operation">√</button>
+                <button class="calc__btn  calc__btn--operation">^</button>
+                <button class="calc__btn  calc__btn--percent">%</button>
+                <button class="calc__btn  calc__btn--minus-one">⊗</button>
+            </div> <!-- .calc__row -->
+
+            <div class="calc__row">
+                <button class="calc__btn  calc__btn--number">7</button>
+                <button class="calc__btn  calc__btn--number">8</button>
+                <button class="calc__btn  calc__btn--number">9</button>
+                <button class="calc__btn  calc__btn--operation">+</button>
+            </div> <!-- .calc__row -->
+
+            <div class="calc__row">
+                <button class="calc__btn  calc__btn--number">4</button>
+                <button class="calc__btn  calc__btn--number">5</button>
+                <button class="calc__btn  calc__btn--number">6</button>
+                <button class="calc__btn  calc__btn--operation">-</button>
+            </div> <!-- .calc__row -->
+
+            <div class="calc__row">
+                <button class="calc__btn  calc__btn--number">1</button>
+                <button class="calc__btn  calc__btn--number">2</button>
+                <button class="calc__btn  calc__btn--number">3</button>
+                <button class="calc__btn  calc__btn--operation">/</button>
+            </div> <!-- .calc__row -->
+
+            <div class="calc__row">
+                <button class="calc__btn  calc__btn--sign">+/-</button>
+                <button class="calc__btn  calc__btn--number">0</button>
+                <button class="calc__btn  calc__btn--point">.</button>
+                <button class="calc__btn  calc__btn--operation">X</button>
+            </div> <!-- .calc__row -->
+
+            <div class="calc__row">
+                <button class="calc__btn  calc__btn--equally">=</button>
+            </div> <!-- .calc__row -->
+
+        </div> <!-- #calc -->
+
+        <div class="manual">
+            <a href="#" id="manual__btn">Открыть инструкцию</a>
+
+            <div id="manual__wrapper">
+                <h2 class="manual__title">Инструкция к калькулятору</h2>
+
+                <p class="manual__text">Для того, что вычислить необходимое Вам выражение, выполните следующие действия:
+                </p>
+                <ul class="manual__list">
+                    <li class="manual__action"><span class="manual__action--text">Введите первое число;</span></li>
+                    <li class="manual__action"><span class="manual__action--text">Выберите необходимую математическую
+                            операцию;</span></li>
+                    <li class="manual__action"><span class="manual__action--text">Введите первое число;</span></li>
+                    <li class="manual__action"><span class="manual__action--text">Нажмите кнопку " = ".</span></li>
+                </ul>
+
+                <p class="manual__text">Дополнительная помощь:</p>
+                <ul class="manual__list">
+                    <li class="manual__action"><span class="manual__action--text">Если Вам необходимо очистить все
+                            данные, нажмите кнопку "С";</span></li>
+                    <li class="manual__action"><span class="manual__action--text">Если Вам необходимо стереть последний
+                            введенный символ, нажмите кнопку "⊗";</span></li>
+                    <li class="manual__action"><span class="manual__action--text">Если Вам необходимо изменить знак
+                            числа, нажмите кнопку "+/-";</span></li>
+                    <li class="manual__action"><span class="manual__action--text">Если Вам необходимо вычислить
+                            квадратный корень, введите число, нажмите кнопку "√", затем нажмите кнопку "=";</span></li>
+                    <li class="manual__action"><span class="manual__action--text">Если Вам необходимо вычислить корень
+                            определенной степени, введите число, нажмите кнопку "√", введите степень корня, затем
+                            нажмите кнопку "=";</span></li>
+                    <li class="manual__action"><span class="manual__action--text">Если Вам необходимо возвести число в
+                            квадрат, введите число, нажмите кнопку "^", затем нажмите кнопку "=";;</span></li>
+                    <li class="manual__action"><span class="manual__action--text">Если Вам необходимо возвести число в
+                            определенную степень, введите число, нажмите кнопку "^", введите степень, затем нажмите
+                            кнопку "=";</span></li>
+                    <li class="manual__action"><span class="manual__action--text">Если Вам необходимо выполнить действия
+                            с процентом от числа, введите число, выберите необходимую математическую операцию, введите
+                            число процента, нажмите кнопку "%", затем нажмите кнопку "=";</span></li>
+                    <li class="manual__action"><span class="manual__action--text">Если Вам необходимо прибавить,
+                            вычесть, поделить или умножить число на само себя, введите число, выберите необходимую
+                            математическую операцию, затем нажмите кнопку "=";</span></li>
+                </ul>
+            </div>
+        </div>
+
+    </div> <!-- container -->
+    
+    <script src="script.js"></script>
+    <script language=javaScript>
+        document.onselectstart = new Function("return false");
+        document.ondragstart = new Function("return false");
+    </script>
+    
+</body>
+
+</html>
