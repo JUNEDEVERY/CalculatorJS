@@ -5,16 +5,7 @@ var result = document.getElementById("result");
 let firstNumber = '';
 let secondNumber = '';
 let operation = '';
-
-let firstNumberlength;
-let secondNumberlength;
-let firstNumberPointIndex;
-let secondNumberPointIndex;
-let firstNumberAfterPoint = 0;
-let secondNumberAfterPoint = 0;
-let resultlength;
-let resultPointIndex;
-let resultAfterPoint = 0;
+let lengthSecondNumber;
 
 
 //навешивание клика на весь калькулятор
@@ -140,11 +131,9 @@ function onButtonClick(infoClick) {
     if (infoClick.target.classList.contains("calc__btn--percent") && operation != '' && firstNumber != '' && secondNumber != '') {
         secondNumber = (firstNumber / 100) * secondNumber;
         if (String(secondNumber).includes('.')) {
-            secondNumberPointIndex = String(secondNumber).indexOf('.');
-            secondNumberlength = String(secondNumber).length;
-            secondNumberAfterPoint = (String(secondNumber).slice(secondNumberPointIndex + 1, secondNumberlength)).length;
-            console.log(secondNumberPointIndex, secondNumberlength, secondNumberAfterPoint);
-            secondNumber = Number(secondNumber).toFixed(3);
+            secondNumber = Number(secondNumber).toFixed(14) * 10;
+            lengthSecondNumber = String(secondNumber).length;
+            secondNumber = String(secondNumber / 10).slice(0, lengthSecondNumber + 1);
         };
         result.innerText = secondNumber;
     };
@@ -153,20 +142,6 @@ function onButtonClick(infoClick) {
     if (infoClick.target.classList.contains("calc__btn--equally")) {
 
         console.log(firstNumber, operation, secondNumber);
-
-        //определение количества символов после запятой в 1 и 2 числах для дальнейшего округления
-        if (String(firstNumber).includes('.')) {
-            firstNumberPointIndex = String(firstNumber).indexOf('.');
-            firstNumberlength = String(firstNumber).length;
-            firstNumberAfterPoint = (String(firstNumber).slice(firstNumberPointIndex + 1, firstNumberlength)).length;
-            // console.log(firstNumberPointIndex, firstNumberlength, firstNumberAfterPoint);
-        };
-        if (String(secondNumber).includes('.')) {
-            secondNumberPointIndex = String(secondNumber).indexOf('.');
-            secondNumberlength = String(secondNumber).length;
-            secondNumberAfterPoint = (String(secondNumber).slice(secondNumberPointIndex + 1, secondNumberlength)).length;
-            // console.log(secondNumberPointIndex, secondNumberlength, secondNumberAfterPoint);
-        };
 
         //вычисление корня
         if (operation === '√') {
@@ -223,63 +198,18 @@ function onButtonClick(infoClick) {
         };
 
         //вывод результата с округлением
-        if (secondNumberAfterPoint > firstNumberAfterPoint) {
-            //колво символов после точки больше во 2 числе
-            if (String(firstNumber).includes('.')) {
-                resultPointIndex = String(firstNumber).indexOf('.');
-                resultlength = String(firstNumber).length;
-                resultAfterPoint = (String(firstNumber).slice(firstNumberPointIndex + 1, firstNumberlength)).length;
-                if (resultAfterPoint > firstNumberPointIndex) {
-                    firstNumber = Number(firstNumber).toFixed(10);
-                    result.innerText = firstNumber;
-                } else {
-                    firstNumber = Number(firstNumber).toFixed(secondNumberAfterPoint);
-                    result.innerText = firstNumber;
-                };
-            } else {
-                firstNumber = Number(firstNumber).toFixed(0);
-                result.innerText = firstNumber;
-            };
+        if (String(firstNumber).includes('.')) {
+            firstNumber = Number(firstNumber).toFixed(14) * 10;
+            firstNumber = firstNumber / 10;
+            result.innerText = firstNumber;
         } else {
-            //кол-во символов после точки больше в 1 числе
-            //кол-во символов после точки в обоих числах одинаковое
-            //символов после точки нет в обоих числах
-            if (String(firstNumber).includes('.')) {
-                resultPointIndex = String(firstNumber).indexOf('.');
-                resultlength = String(firstNumber).length;
-                resultAfterPoint = (String(firstNumber).slice(firstNumberPointIndex + 1, firstNumberlength)).length;
-                if (resultAfterPoint > firstNumberPointIndex) {
-                    firstNumber = Number(firstNumber).toFixed(10);
-                    result.innerText = firstNumber;
-                } else {
-                    if (firstNumberAfterPoint == 0 && secondNumberAfterPoint == 0) {
-                        firstNumber = Number(firstNumber).toFixed(3);
-                        result.innerText = firstNumber;
-                    } else {
-                        firstNumber = Number(firstNumber).toFixed(firstNumberAfterPoint);
-                        result.innerText = firstNumber;
-                    };
-                };
-            } else {
-                firstNumber = Number(firstNumber).toFixed(0);
-                result.innerText = firstNumber;
-            };
-        };
+            result.innerText = firstNumber;
+        }
+        console.log('= ', result.innerHTML);
 
         //обнуление переменных
         secondNumber = '';
         operation = '';
-        firstNumberlength = 0;
-        secondNumberlength = 0;
-        firstNumberPointIndex = 0;
-        secondNumberPointIndex = 0;
-        firstNumberAfterPoint = 0;
-        secondNumberAfterPoint = 0;
-        resultlength = 0;
-        resultPointIndex = 0;
-        resultAfterPoint = 0;
-
-        console.log('= ', result.innerHTML);
 
     };
 
