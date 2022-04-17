@@ -5,7 +5,16 @@ var result = document.getElementById("result");
 let firstNumber = '';
 let secondNumber = '';
 let operation = '';
-let lengthResult;
+
+let firstNumberlength;
+let secondNumberlength;
+let firstNumberPointIndex;
+let secondNumberPointIndex;
+let firstNumberAfterPoint = 0;
+let secondNumberAfterPoint = 0;
+let resultlength;
+let resultPointIndex;
+let resultAfterPoint = 0;
 
 
 //навешивание клика на весь калькулятор
@@ -26,7 +35,7 @@ function onButtonClick(infoClick) {
         firstNumber = '';
         secondNumber = '';
         operation = '';
-    }
+    };
 
     //удаление одного символа
     if (infoClick.target.classList.contains("calc__btn--minus-one")) {
@@ -39,7 +48,7 @@ function onButtonClick(infoClick) {
             } else {
                 firstNumber = firstNumber.slice(0, (firstNumber.length - 1));
                 result.innerText = firstNumber;
-            }
+            };
         }
         //очистка знака операции
         else if (firstNumber != '' && operation != '' && secondNumber === '') {
@@ -54,51 +63,51 @@ function onButtonClick(infoClick) {
             } else {
                 secondNumber = secondNumber.slice(0, (secondNumber.length - 1));
                 result.innerText = secondNumber;
-            }
-        }
-    }
+            };
+        };
+    };
 
     //нажата кнопка знака операции при отсутствии чисел
-    else if (result.innerText === '0' && infoClick.target.classList.contains("calc__btn--operation")) {
+    if (result.innerText === '0' && infoClick.target.classList.contains("calc__btn--operation")) {
         result.innerText = '0';
-    }
+    };
 
     //несколько раз нажата кнопка "0", когда в строке ввода и так 0
-    else if (result.innerText === '0' && infoClick.target.innerText === '0') {
+    if (result.innerText === '0' && infoClick.target.innerText === '0') {
         result.innerText = '0';
-    }
+    };
 
     //ввод первого числа
-    else if (infoClick.target.classList.contains("calc__btn--number") && operation === '') {
+    if (infoClick.target.classList.contains("calc__btn--number") && operation === '' && firstNumber.length < 10) {
         firstNumber += infoClick.target.innerText;
         result.innerText = firstNumber;
-    }
+    };
 
     //ввод знака операции
-    else if (infoClick.target.classList.contains("calc__btn--operation") && firstNumber != '' && operation === '') {
+    if (infoClick.target.classList.contains("calc__btn--operation") && firstNumber != '' && secondNumber === '') {
         operation = infoClick.target.innerText;
         result.innerText = operation;
-    }
+    };
 
     //ввод второго числа
-    else if (infoClick.target.classList.contains("calc__btn--number") && operation != '') {
+    if (infoClick.target.classList.contains("calc__btn--number") && operation != ''  && secondNumber.length < 10) {
         secondNumber += infoClick.target.innerText;
         result.innerText = secondNumber;
-    }
+    };
 
     //знак числа (нажата кнопка "+/-")
-    else if (infoClick.target.classList.contains("calc__btn--sign")) {
+    if (infoClick.target.classList.contains("calc__btn--sign")) {
         if (firstNumber != '' && secondNumber === '') {
             firstNumber = -firstNumber;
             result.innerText = firstNumber;
         } else if (firstNumber != '' && secondNumber != '') {
             secondNumber = -secondNumber;
             result.innerText = secondNumber;
-        }
-    }
+        };
+    };
 
     //дробные числа (ввод точки)
-    else if (infoClick.target.classList.contains("calc__btn--point")) {
+    if (infoClick.target.classList.contains("calc__btn--point")) {
         //для первого числа
         if (secondNumber === '') {
             firstNumber = String(firstNumber);
@@ -110,7 +119,7 @@ function onButtonClick(infoClick) {
                 result.innerText = firstNumber;
             } else if (firstNumber != '' && firstNumber.includes('.')) {
                 result.innerText = firstNumber;
-            }
+            };
         }
         //для второго числа
         else {
@@ -123,30 +132,41 @@ function onButtonClick(infoClick) {
                 result.innerText = secondNumber;
             } else if (secondNumber != '' && secondNumber.includes('.')) {
                 result.innerText = secondNumber;
-            }
-        }
-    }
+            };
+        };
+    };
 
     //вычисление процента (нажата кнопка "%")
-    else if (infoClick.target.classList.contains("calc__btn--percent") && operation != '' && firstNumber != '' && secondNumber != '') {
+    if (infoClick.target.classList.contains("calc__btn--percent") && operation != '' && firstNumber != '' && secondNumber != '') {
         secondNumber = (firstNumber / 100) * secondNumber;
+        if (String(secondNumber).includes('.')) {
+            secondNumberPointIndex = String(secondNumber).indexOf('.');
+            secondNumberlength = String(secondNumber).length;
+            secondNumberAfterPoint = (String(secondNumber).slice(secondNumberPointIndex + 1, secondNumberlength)).length;
+            console.log(secondNumberPointIndex, secondNumberlength, secondNumberAfterPoint);
+            secondNumber = Number(secondNumber).toFixed(3);
+        };
         result.innerText = secondNumber;
-    }
+    };
 
     //вычисление результата (нажата кнопка "=")
-    else if (infoClick.target.classList.contains("calc__btn--equally")) {
+    if (infoClick.target.classList.contains("calc__btn--equally")) {
 
         console.log(firstNumber, operation, secondNumber);
 
-        //правильное округление результата, в зависимости 
-        //от длины введенных чисел
-        if (String(firstNumber).length > String(secondNumber).length) {
-            lengthResult = String(firstNumber).length;
-        } else if (String(firstNumber).length < String(secondNumber).length) {
-            lengthResult = String(secondNumber).length;
-        } else {
-            lengthResult = String(firstNumber).length;
-        }
+        //определение количества символов после запятой в 1 и 2 числах для дальнейшего округления
+        if (String(firstNumber).includes('.')) {
+            firstNumberPointIndex = String(firstNumber).indexOf('.');
+            firstNumberlength = String(firstNumber).length;
+            firstNumberAfterPoint = (String(firstNumber).slice(firstNumberPointIndex + 1, firstNumberlength)).length;
+            // console.log(firstNumberPointIndex, firstNumberlength, firstNumberAfterPoint);
+        };
+        if (String(secondNumber).includes('.')) {
+            secondNumberPointIndex = String(secondNumber).indexOf('.');
+            secondNumberlength = String(secondNumber).length;
+            secondNumberAfterPoint = (String(secondNumber).slice(secondNumberPointIndex + 1, secondNumberlength)).length;
+            // console.log(secondNumberPointIndex, secondNumberlength, secondNumberAfterPoint);
+        };
 
         //вычисление корня
         if (operation === '√') {
@@ -157,8 +177,8 @@ function onButtonClick(infoClick) {
             //корень указанной степени
             else if (secondNumber != '') {
                 firstNumber = Number(firstNumber) ** (1 / Number(secondNumber));
-            }
-        }
+            };
+        };
 
         //возведение в степень
         if (operation === '^') {
@@ -169,14 +189,14 @@ function onButtonClick(infoClick) {
             //возведение в указанную степень
             else if (secondNumber != '') {
                 firstNumber = firstNumber ** secondNumber;
-            }
-        }
+            };
+        };
 
         //если второе число не введено, то при нажатии на кнопку "=", 
         //оно автоматически приравнивается к первому числу
         if (secondNumber === '') {
             secondNumber = firstNumber;
-        }
+        };
 
         //вычисление простых операций
         switch (operation) {
@@ -200,24 +220,60 @@ function onButtonClick(infoClick) {
                     firstNumber = firstNumber / secondNumber;
                 }
                 break;
-        }
+        };
 
-        //обнуление второго числа и знака операции
+        //вывод результата с округлением
+        if (secondNumberAfterPoint > firstNumberAfterPoint) {
+            //колво символов после точки больше во 2 числе
+            if (String(firstNumber).includes('.')) {
+                resultPointIndex = String(firstNumber).indexOf('.');
+                resultlength = String(firstNumber).length;
+                resultAfterPoint = (String(firstNumber).slice(firstNumberPointIndex + 1, firstNumberlength)).length;
+                firstNumber = Number(firstNumber).toFixed(secondNumberAfterPoint);
+                result.innerText = firstNumber;
+            } else {
+                firstNumber = Number(firstNumber).toFixed(0);
+                result.innerText = firstNumber;
+            };
+        } else {
+            //кол-во символов после точки больше в 1 числе
+            //кол-во символов после точки в обоих числах одинаковое
+            //символов после точки нет в обоих числах
+            if (String(firstNumber).includes('.')) {
+                resultPointIndex = String(firstNumber).indexOf('.');
+                resultlength = String(firstNumber).length;
+                resultAfterPoint = (String(firstNumber).slice(firstNumberPointIndex + 1, firstNumberlength)).length;
+                if (firstNumberAfterPoint == 0 && secondNumberAfterPoint == 0) {
+                    firstNumber = Number(firstNumber).toFixed(3);
+                    result.innerText = firstNumber;
+                } else {
+                    firstNumber = Number(firstNumber).toFixed(firstNumberAfterPoint);
+                    result.innerText = firstNumber;
+                };
+            } else {
+                firstNumber = Number(firstNumber).toFixed(0);
+                result.innerText = firstNumber;
+            };
+        };
+
+        //обнуление переменных
         secondNumber = '';
         operation = '';
+        firstNumberlength = 0;
+        secondNumberlength = 0;
+        firstNumberPointIndex = 0;
+        secondNumberPointIndex = 0;
+        firstNumberAfterPoint = 0;
+        secondNumberAfterPoint = 0;
+        resultlength = 0;
+        resultPointIndex = 0;
+        resultAfterPoint = 0;
 
-        //вывод результата
-        if (Number.isInteger(firstNumber)) {
-            result.innerText = firstNumber;
-        } else if (!Number.isInteger(firstNumber)) {
-            firstNumber = firstNumber.toPrecision(lengthResult + 1);
-            result.innerText = firstNumber;
-        }
-        console.log('= ', result.innerHTML)
+        console.log('= ', result.innerHTML);
 
-    }
+    };
 
-}
+};
 
 
 //открытие и закрытие инструкции
