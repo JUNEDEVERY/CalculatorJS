@@ -90,7 +90,7 @@ function onButtonClick(infoClick) {
     };
 
     //ввод второго числа
-    if (infoClick.target.classList.contains("calc__btn--number") && operation != ''  && secondNumber.length < 10) {
+    if (infoClick.target.classList.contains("calc__btn--number") && operation != '' && secondNumber.length < 10) {
         secondNumber += infoClick.target.innerText;
         result.innerText = secondNumber;
     };
@@ -229,8 +229,13 @@ function onButtonClick(infoClick) {
                 resultPointIndex = String(firstNumber).indexOf('.');
                 resultlength = String(firstNumber).length;
                 resultAfterPoint = (String(firstNumber).slice(firstNumberPointIndex + 1, firstNumberlength)).length;
-                firstNumber = Number(firstNumber).toFixed(secondNumberAfterPoint);
-                result.innerText = firstNumber;
+                if (resultAfterPoint > firstNumberPointIndex) {
+                    firstNumber = Number(firstNumber).toFixed(10);
+                    result.innerText = firstNumber;
+                } else {
+                    firstNumber = Number(firstNumber).toFixed(secondNumberAfterPoint);
+                    result.innerText = firstNumber;
+                };
             } else {
                 firstNumber = Number(firstNumber).toFixed(0);
                 result.innerText = firstNumber;
@@ -243,12 +248,17 @@ function onButtonClick(infoClick) {
                 resultPointIndex = String(firstNumber).indexOf('.');
                 resultlength = String(firstNumber).length;
                 resultAfterPoint = (String(firstNumber).slice(firstNumberPointIndex + 1, firstNumberlength)).length;
-                if (firstNumberAfterPoint == 0 && secondNumberAfterPoint == 0) {
-                    firstNumber = Number(firstNumber).toFixed(3);
+                if (resultAfterPoint > firstNumberPointIndex) {
+                    firstNumber = Number(firstNumber).toFixed(10);
                     result.innerText = firstNumber;
                 } else {
-                    firstNumber = Number(firstNumber).toFixed(firstNumberAfterPoint);
-                    result.innerText = firstNumber;
+                    if (firstNumberAfterPoint == 0 && secondNumberAfterPoint == 0) {
+                        firstNumber = Number(firstNumber).toFixed(3);
+                        result.innerText = firstNumber;
+                    } else {
+                        firstNumber = Number(firstNumber).toFixed(firstNumberAfterPoint);
+                        result.innerText = firstNumber;
+                    };
                 };
             } else {
                 firstNumber = Number(firstNumber).toFixed(0);
