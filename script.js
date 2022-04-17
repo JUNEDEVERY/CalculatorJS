@@ -210,7 +210,7 @@ function onButtonClick(infoClick) {
         if (Number.isInteger(firstNumber)) {
             result.innerText = firstNumber;
         } else if (!Number.isInteger(firstNumber)) {
-            firstNumber = firstNumber.toPrecision(lengthResult);
+            firstNumber = firstNumber.toPrecision(lengthResult + 1);
             result.innerText = firstNumber;
         }
         console.log('= ', result.innerHTML)
